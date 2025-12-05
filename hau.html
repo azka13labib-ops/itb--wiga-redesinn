@@ -1,0 +1,4873 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ITB Widyagama Lumajang</title>
+  <style>
+    /* VARIABEL & RESET - GABUNGAN */
+    :root {
+      --page-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+
+      --aud-bg: #073a63;
+      --aud-text: rgba(255, 255, 255, 0.92);
+
+      --nav-bg: #ffffff;
+      --nav-text: #0b1b2e;
+
+      --accent-yellow: #ffbf0f;
+      --accent-yellow-2: #f5b700;
+      --accent-navy: #0b3a66;
+      --accent-blue: #0b63b5;
+      --accent-light-blue: #dff6ff;
+
+      --card: #ffffff;
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.16);
+      --radius: 12px;
+      --container: 1200px;
+
+      --bp-aud-mobile: 680px;
+      --bp-nav-mobile: 980px;
+
+      /* Variabel tambahan dari file kedua */
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+
+      --primary: #0b3a66;
+      --primary-light: #1e6cb8;
+      --primary-dark: #092c4f;
+      --primary-soft: #e2ecf7;
+
+      --accent: #ffbf0f;
+      --accent-light: #fff7d6;
+      --accent-dark: #e6a800;
+
+      --border-soft: rgba(226, 232, 240, .95);
+
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+
+      --shadow-sm: 0 4px 12px rgba(2, 6, 23, .05);
+      --shadow-md: 0 10px 30px rgba(2, 6, 23, .08);
+      --shadow-lg: 0 18px 44px rgba(2, 6, 23, .12);
+
+      --transition: 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 120px;
+    }
+
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================
+       AUDIENCE BAR & NAVIGASI
+    ========================= */
+    .audience-bar {
+      background: linear-gradient(135deg, var(--aud-bg), #0a4575);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      position: relative;
+      z-index: 1200;
+      padding: 4px 0;
+    }
+
+    .audience-inner {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .aud-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-right: 10px;
+      border-right: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .social a {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.88);
+      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .social a:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      transform: translateY(-1px) scale(1.1);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+    }
+
+    /* Desktop Audience Navigation */
+    .aud-nav {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      overflow: visible;
+    }
+
+    .aud-item {
+      position: relative;
+    }
+
+    .aud-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--aud-text);
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .aud-toggle:hover,
+    .aud-item.open>.aud-toggle {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    .caret {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    .aud-item.open .caret {
+      transform: rotate(180deg);
+    }
+
+    .aud-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 320px;
+      max-width: 440px;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 5500;
+    }
+
+    .aud-dropdown::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 18px;
+      width: 14px;
+      height: 14px;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: rotate(45deg);
+    }
+
+    .aud-link {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #111827;
+      line-height: 1.4;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .aud-link:hover {
+      background: var(--primary-soft);
+      transform: translateX(4px);
+      border-left-color: var(--accent-yellow);
+    }
+
+    .aud-item.open>.aud-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: fadeInUp 0.2s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Main Navbar */
+    .navbar {
+      background: var(--nav-bg);
+      color: var(--nav-text);
+      z-index: 1100;
+      position: relative;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .nav-inner {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 280px;
+      transition: transform 0.2s ease;
+    }
+
+    .brand:hover {
+      transform: translateY(-1px);
+    }
+
+    .logo-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      object-fit: contain;
+      background: #ffffff;
+      border: 1px solid rgba(11, 58, 102, 0.18);
+      box-shadow: 0 4px 12px rgba(11, 58, 102, 0.15);
+      padding: 6px;
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover .logo-img {
+      transform: scale(1.05) rotate(3deg);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.1;
+    }
+
+    .brand-small {
+      font-size: 11.5px;
+      letter-spacing: 0.1px;
+      color: #0b1b2e;
+      text-transform: none;
+      font-weight: 700;
+    }
+
+    .brand-main {
+      font-size: 14px;
+      letter-spacing: 0.4px;
+      color: #b4001c;
+      text-transform: uppercase;
+      font-weight: 900;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Desktop Main Navigation */
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-link,
+    .dd-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      color: rgba(11, 27, 46, 0.92);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      position: relative;
+      font-weight: 600;
+      font-size: 13.5px;
+    }
+
+    .nav-link:hover,
+    .dd-toggle:hover,
+    .has-dropdown.open>.dd-toggle {
+      background: rgba(11, 58, 102, 0.08);
+      border-color: rgba(11, 58, 102, 0.12);
+      color: var(--accent-navy);
+    }
+
+    .nav-link::after,
+    .dd-toggle::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent-yellow);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .dd-toggle:hover::after,
+    .has-dropdown.open>.dd-toggle::after {
+      width: 70%;
+    }
+
+    .has-dropdown {
+      position: relative;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 300px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 5600;
+    }
+
+    .dropdown::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      width: 14px;
+      height: 14px;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: rotate(45deg);
+    }
+
+    .menu-item {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      color: #111827;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: var(--primary-soft);
+      transform: translateX(4px);
+      color: var(--accent-navy);
+      border-left-color: var(--accent-yellow);
+    }
+
+    .menu-title {
+      padding: 10px 12px 6px;
+      font-weight: 800;
+      font-size: 12.5px;
+      color: var(--accent-navy);
+      opacity: .95;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .has-dropdown.open>.dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: fadeInUp 0.2s ease;
+    }
+
+    /* Submenu (Desktop) */
+    .submenu-wrap {
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    .sub-toggle {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      color: #111827;
+      transition: all 0.2s ease;
+    }
+
+    .sub-toggle:hover,
+    .submenu-wrap.open>.sub-toggle {
+      background: var(--primary-soft);
+    }
+
+    .sub-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-navy);
+    }
+
+    .sub-hint {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .caret-right {
+      transform: rotate(0deg);
+      transition: transform 0.2s ease;
+    }
+
+    .submenu-wrap.open .caret-right {
+      transform: rotate(90deg);
+    }
+
+    .submenu {
+      position: absolute;
+      top: 0;
+      left: calc(100% + 10px);
+      min-width: 260px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 5650;
+    }
+
+    .submenu::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: -8px;
+      width: 14px;
+      height: 14px;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: rotate(-45deg);
+    }
+
+    .submenu-wrap.open>.submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: fadeInUp 0.2s ease;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.08);
+      margin: 8px 12px;
+    }
+
+    /* CTA Buttons */
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(11, 58, 102, 0.18);
+      background: #ffffff;
+      color: #0b3a66;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(11, 58, 102, 0.15);
+      background: #f3f8ff;
+    }
+
+    .btn--solid {
+      border-color: rgba(0, 0, 0, 0.08);
+      background: var(--accent-yellow);
+      color: #0b1b2e;
+    }
+
+    .btn--solid:hover {
+      background: var(--accent-yellow-2);
+      box-shadow: 0 6px 16px rgba(245, 183, 0, 0.25);
+    }
+
+    /* Mobile Buttons */
+    .aud-actions,
+    .nav-actions {
+      display: none;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .icon-btn:hover {
+      background: #f8fafc;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      color: #334155;
+    }
+
+    /* =========================
+       HERO SECTION
+    ========================= */
+    .utama {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 80px 0 100px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 30px;
+      align-items: center;
+      position: relative;
+      z-index: 0;
+      isolation: isolate;
+    }
+
+    .utama::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      z-index: -1;
+      background: linear-gradient(135deg,
+          #062d55 0%,
+          #0b63b5 25%,
+          #1f86d8 50%,
+          #4aa9ff 75%,
+          #dff6ff 100%);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .utama::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      bottom: -1px;
+      height: 40px;
+      z-index: -1;
+      background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0),
+          rgba(255, 255, 255, 0.8) 30%,
+          rgba(255, 255, 255, 1) 100%);
+    }
+
+    .kiri {
+      animation: slideInLeft 0.8s ease;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .kiri h1 {
+      line-height: 1.1;
+      letter-spacing: 0.2px;
+      color: #ffffff;
+      font-size: clamp(26px, 2.8vw, 38px);
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .kiri h1+h1 {
+      margin-top: 6px;
+      color: var(--accent-yellow);
+    }
+
+    .kiri p {
+      margin: 20px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.65;
+      max-width: 58ch;
+      font-size: 15px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .cta-row {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+
+    .btn-utama {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: var(--accent-yellow);
+      color: #0b1b2e;
+      border: 2px solid transparent;
+      font-weight: 800;
+      transition: all 0.2s ease;
+      font-size: 15px;
+      box-shadow: 0 4px 12px rgba(245, 183, 0, 0.3);
+    }
+
+    .btn-utama:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(245, 183, 0, 0.4);
+      background: var(--accent-yellow-2);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      font-weight: 800;
+      transition: all 0.2s ease;
+      font-size: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Slider */
+    .slider {
+      position: relative;
+      border-radius: 20px;
+      width: 100%;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 20, 45, 0.3);
+      backdrop-filter: blur(10px);
+      animation: slideInRight 0.8s ease;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .slides {
+      position: relative;
+      height: 340px;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.02);
+      transition: opacity 0.35s ease, transform 0.45s ease;
+    }
+
+    .slide.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .slider .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(15, 23, 42, 0.4);
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .slider .nav:hover {
+      background: rgba(15, 23, 42, 0.6);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .slider .prev {
+      left: 16px;
+    }
+
+    .slider .next {
+      right: 16px;
+    }
+
+    .dots {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 0;
+      background: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dot.is-active {
+      width: 24px;
+      background: #ffffff;
+      transform: scale(1.1);
+    }
+
+    .dot:hover:not(.is-active) {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.1);
+    }
+
+    /* =========================
+       MINI NAVIGATION
+    ========================= */
+    .mini-nav {
+      position: sticky;
+      top: 112px;
+      z-index: 900;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .mini-nav .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px clamp(16px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+      color: var(--primary);
+      user-select: none;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .brand-badge {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--primary-light));
+      box-shadow: 0 0 0 4px rgba(255, 191, 15, .25);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 4px rgba(255, 191, 15, .25);
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px rgba(255, 191, 15, .15);
+      }
+    }
+
+    .mini-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mini-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(226, 232, 240, .9);
+      background: rgba(255, 255, 255, .7);
+      transition: var(--transition);
+    }
+
+    .mini-links a:hover {
+      color: var(--primary);
+      border-color: rgba(11, 58, 102, .18);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      background: var(--primary-soft);
+    }
+
+    .mini-links a.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* =========================
+       1) BERITA SECTION
+    ========================= */
+    .news-section {
+      width: 100%;
+      padding: 60px 0;
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .news-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-yellow));
+      opacity: 0.8;
+    }
+
+    .news-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 48px);
+      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .news-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(226, 232, 240, .8);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .news-title-wrap {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .news-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--primary);
+      background: linear-gradient(to right, var(--primary-soft), #e8f2fb);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(11, 58, 102, .1);
+      box-shadow: 0 2px 8px rgba(11, 58, 102, .1);
+    }
+
+    .news-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, .15);
+      animation: pulse 2s infinite;
+    }
+
+    .news-title {
+      font-size: 32px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      line-height: 1.2;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .news-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .news-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(248, 250, 252, .95);
+      border: 1px solid rgba(226, 232, 240, .95);
+      padding: 6px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 6px 12px rgba(2, 6, 23, .05);
+    }
+
+    .news-filter-btn {
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .news-filter-btn:hover {
+      color: var(--primary);
+      background: rgba(11, 58, 102, .08);
+      transform: translateY(-1px);
+    }
+
+    .news-filter-btn.is-active {
+      background: var(--accent-light);
+      color: #92400e;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(255, 191, 15, .25);
+      transform: translateY(-1px);
+    }
+
+    .news-filter-btn strong {
+      font-weight: 900;
+    }
+
+    .news-layout {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      width: 100%;
+      min-height: 480px;
+    }
+
+    .news-headline {
+      flex: 1.25;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(226, 232, 240, .9);
+      transition: transform var(--transition), box-shadow var(--transition);
+      height: 100%;
+    }
+
+    .news-headline:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .news-headline.is-hidden {
+      display: none;
+    }
+
+    .news-headline-img-wrap {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 240px;
+      background: #0b1220;
+      flex-shrink: 0;
+    }
+
+    .news-headline-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition);
+    }
+
+    .news-headline:hover .news-headline-img {
+      transform: scale(1.05);
+    }
+
+    .news-headline-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(15, 23, 42, .9);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      border: 1px solid rgba(255, 255, 255, .1);
+    }
+
+    .news-headline-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .news-headline-tag {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .05em;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 6px 12px;
+      border-radius: 999px;
+      width: fit-content;
+      border: 1px solid rgba(11, 58, 102, .1);
+    }
+
+    .news-headline-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-headline-meta {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .news-headline-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .news-headline-meta span+span::before {
+      content: "•";
+      margin: 0 8px;
+      color: #cbd5e1;
+    }
+
+    .news-headline-excerpt {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-headline-link {
+      font-size: 15px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      align-self: flex-start;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 20px rgba(11, 58, 102, .2);
+      transition: var(--transition);
+      min-width: 160px;
+      margin-top: auto;
+    }
+
+    .news-headline-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(11, 58, 102, .3);
+      gap: 12px;
+    }
+
+    .news-headline-link::after {
+      content: "→";
+      font-size: 18px;
+      font-weight: 900;
+      transition: transform var(--transition);
+    }
+
+    .news-headline-link:hover::after {
+      transform: translateX(4px);
+    }
+
+    .news-list {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .news-list::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .news-list::-webkit-scrollbar-track {
+      background: rgba(226, 232, 240, .5);
+      border-radius: 10px;
+    }
+
+    .news-list::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, .6);
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+
+    .news-list::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, .8);
+    }
+
+    .news-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(226, 232, 240, .95);
+      transition: transform var(--transition), box-shadow var(--transition);
+      min-width: 0;
+      flex-shrink: 0;
+      animation: newsFadeIn 0.3s ease forwards;
+    }
+
+    .news-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .news-item[data-category="berita"] {
+      border-left: 4px solid var(--accent);
+    }
+
+    .news-item[data-category="pengumuman"] {
+      border-left: 4px solid #3b82f6;
+    }
+
+    .news-item[data-category="informasi"] {
+      border-left: 4px solid #0ea5e9;
+    }
+
+    .news-item-media {
+      flex: 0 0 90px;
+      width: 90px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f1f5f9;
+      border: 1px solid rgba(226, 232, 240, .9);
+      height: 90px;
+    }
+
+    .news-item-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform var(--transition);
+    }
+
+    .news-item:hover .news-item-thumb {
+      transform: scale(1.08);
+    }
+
+    .news-item-content {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      flex: 1;
+      gap: 8px;
+    }
+
+    .news-item-tag {
+      font-size: 12px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-block;
+      align-self: flex-start;
+      letter-spacing: .02em;
+    }
+
+    .tag--berita {
+      background: linear-gradient(to right, #fef3c7, #fde68a);
+      color: #92400e;
+      border: 1px solid rgba(245, 158, 11, .2);
+    }
+
+    .tag--pengumuman {
+      background: linear-gradient(to right, #dbeafe, #bfdbfe);
+      color: #1d4ed8;
+      border: 1px solid rgba(59, 130, 246, .2);
+    }
+
+    .tag--informasi {
+      background: linear-gradient(to right, #e0f2fe, #bae6fd);
+      color: #0f172a;
+      border: 1px solid rgba(14, 116, 144, .25);
+    }
+
+    .tag--event {
+      background: linear-gradient(to right, #dcfce7, #bbf7d0);
+      color: #166534;
+      border: 1px solid rgba(16, 185, 129, .2);
+    }
+
+    .news-item-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-item-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .news-item-excerpt {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-item-link {
+      font-size: 14px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      transition: var(--transition);
+      align-self: flex-start;
+    }
+
+    .news-item-link:hover {
+      color: var(--primary-dark);
+      gap: 8px;
+    }
+
+    .news-item-link::after {
+      content: "→";
+      font-size: 16px;
+      font-weight: 900;
+      transition: transform var(--transition);
+    }
+
+    .news-item-link:hover::after {
+      transform: translateX(4px);
+    }
+
+    .news-docs {
+      margin-top: 20px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(226, 232, 240, .9);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+    }
+
+    .news-docs h3 {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .news-docs ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .news-docs li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(248, 250, 252, .9);
+      border: 1px solid rgba(226, 232, 240, .9);
+    }
+
+    .news-docs a {
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .news-docs a:hover {
+      color: var(--primary-dark);
+    }
+
+    .news-docs small {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .news-pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 32px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(226, 232, 240, .9);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-weight: 800;
+      font-size: 14px;
+      min-width: 56px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: var(--primary-soft);
+      transform: translateY(-1px);
+    }
+
+    .page-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(11, 58, 102, .2);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* =========================
+       2) PORTAL SECTION
+    ========================= */
+    .portal-section {
+      width: 100%;
+      padding: 60px 0;
+      background: linear-gradient(135deg, #ffffff 0%, #f6f9ff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portal-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-light), var(--accent-yellow));
+      opacity: 0.8;
+    }
+
+    .portal-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 48px);
+    }
+
+    .portal-header {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .portal-header::after {
+      content: '';
+      position: absolute;
+      bottom: -14px;
+      left: 0;
+      width: 86px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 2px;
+      opacity: .95;
+    }
+
+    .portal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary-soft);
+      border: 1px solid rgba(11, 58, 102, 0.15);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(11, 58, 102, .1);
+    }
+
+    .portal-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      animation: portalPulse 2s infinite;
+    }
+
+    @keyframes portalPulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.15);
+        opacity: .82;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .portal-title {
+      font-size: clamp(32px, 4.4vw, 38px);
+      font-weight: 950;
+      line-height: 1.12;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    .portal-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 680px;
+    }
+
+    .search-container {
+      margin-top: 24px;
+      max-width: 720px;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      z-index: 2;
+      opacity: .9;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 20px 16px 56px;
+      font-size: 16px;
+      border: 2px solid rgba(226, 232, 240, 1);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      color: var(--text-main);
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 4px rgba(30, 108, 184, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .search-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .recent-section {
+      margin-top: 24px;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: rgba(226, 236, 247, .7);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(226, 232, 240, .95);
+      backdrop-filter: blur(10px);
+    }
+
+    .recent-title {
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 14px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .recent-title::before {
+      content: '⏱️';
+      font-size: 16px;
+    }
+
+    .recent-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .recent-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border: 1px solid rgba(226, 232, 240, .95);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--primary);
+      text-decoration: none;
+      transition: all var(--transition);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .recent-chip:hover {
+      background: var(--primary-light);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-light);
+    }
+
+    .portals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .portals-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .portals-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
+    .portal-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: all var(--transition);
+      border: 1px solid rgba(226, 232, 240, .95);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .portal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(30, 108, 184, .30);
+    }
+
+    .portal-card:hover::before {
+      opacity: 1;
+    }
+
+    .portal-card:focus-visible {
+      outline: 3px solid rgba(30, 108, 184, .45);
+      outline-offset: 2px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: rgba(226, 236, 247, .85);
+      color: var(--primary);
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+
+    .portal-card:hover .card-icon {
+      transform: scale(1.08) rotate(5deg);
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(30, 108, 184, .3);
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 950;
+      margin-bottom: 12px;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .card-description {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      flex: 1;
+      line-height: 1.55;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    .card-url {
+      font-size: 13px;
+      color: var(--primary-light);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 62%;
+      opacity: .95;
+    }
+
+    .card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 900;
+      text-decoration: none;
+      transition: all var(--transition);
+      white-space: nowrap;
+      box-shadow: 0 10px 20px rgba(11, 58, 102, .2);
+    }
+
+    .portal-card:hover .card-action {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      gap: 10px;
+      transform: translateY(-1px);
+    }
+
+    .card-action::after {
+      content: '→';
+      font-weight: 900;
+      transition: transform var(--transition);
+    }
+
+    .portal-card:hover .card-action::after {
+      transform: translateX(4px);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 24px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 2px dashed rgba(226, 232, 240, 1);
+    }
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      opacity: .55;
+    }
+
+    .empty-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .empty-text {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      max-width: 440px;
+      margin-inline: auto;
+      font-size: 15px;
+    }
+
+    .reset-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 10px 20px rgba(11, 58, 102, .2);
+    }
+
+    .reset-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      gap: 12px;
+    }
+
+    .highlight {
+      background: rgba(255, 191, 15, 0.35);
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+
+    /* =========================
+       3) EVENT SECTION
+    ========================= */
+    .event-section {
+      width: 100%;
+      padding: 60px 0 72px;
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #10b981, var(--primary-light));
+      opacity: 0.8;
+    }
+
+    .event-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 48px);
+    }
+
+    .event-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .event-title-wrap {
+      min-width: 280px;
+      flex: 1;
+    }
+
+    .event-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #065f46;
+      background: linear-gradient(to right, rgba(220, 252, 231, .9), rgba(187, 247, 208, .85));
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(16, 185, 129, .16);
+      box-shadow: 0 2px 8px rgba(16, 185, 129, .1);
+    }
+
+    .event-title {
+      font-size: 32px;
+      font-weight: 950;
+      line-height: 1.15;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--primary), rgba(16, 185, 129, 1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -.4px;
+    }
+
+    .event-subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 680px;
+    }
+
+    .event-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(226, 232, 240, .95);
+      background: rgba(255, 255, 255, .75);
+      color: var(--primary);
+      font-weight: 900;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+    }
+
+    .event-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(11, 58, 102, .18);
+      background: var(--primary-soft);
+    }
+
+    .event-layout {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 24px;
+      align-items: start;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 992px) {
+      .event-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ev-slider {
+      background: rgba(255, 255, 255, .9);
+      border: 1px solid rgba(226, 232, 240, .95);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(10px);
+    }
+
+    .ev-stage {
+      position: relative;
+      height: 300px;
+      background: #0b1220;
+    }
+
+    .ev-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .7s ease;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .ev-slide.active {
+      opacity: 1;
+    }
+
+    .ev-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: .98;
+    }
+
+    .ev-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(2, 6, 23, .9), rgba(2, 6, 23, 0) 55%);
+    }
+
+    .ev-caption {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      color: #fff;
+      z-index: 2;
+    }
+
+    .ev-name {
+      font-weight: 950;
+      font-size: 20px;
+      margin-bottom: 8px;
+      line-height: 1.25;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .ev-date {
+      font-size: 15px;
+      opacity: .95;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .ev-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 20px;
+      border-top: 1px solid rgba(226, 232, 240, .95);
+      background: rgba(255, 255, 255, .95);
+      backdrop-filter: blur(10px);
+    }
+
+    .ev-dots {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ev-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .ev-dot.active {
+      background: #10b981;
+      transform: scale(1.3);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, .2);
+    }
+
+    .ev-nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .ev-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(226, 232, 240, .95);
+      background: white;
+      color: var(--primary);
+      font-weight: 900;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      place-items: center;
+    }
+
+    .ev-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      color: white;
+      border-color: rgba(30, 108, 184, .22);
+      box-shadow: var(--shadow-md);
+    }
+
+    .ev-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ev-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255, 255, 255, .9);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(226, 232, 240, .95);
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(10px);
+    }
+
+    .ev-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(30, 108, 184, .22);
+      box-shadow: var(--shadow-md);
+      background: white;
+    }
+
+    .ev-item-title {
+      font-weight: 900;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .ev-item-detail {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .ev-tag {
+      font-size: 13px;
+      font-weight: 900;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(224, 242, 254, .95);
+      color: #1d4ed8;
+      white-space: nowrap;
+      border: 1px solid rgba(191, 219, 254, .85);
+    }
+
+    /* =========================
+       4) FAKULTAS SECTION
+    ========================= */
+    .faculty-section {
+      width: 100%;
+      padding: 60px 0;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      position: relative;
+    }
+
+    .faculty-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-yellow), var(--primary));
+      opacity: 0.8;
+    }
+
+    .faculty-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 48px);
+    }
+
+    .faculty-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .faculty-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 191, 15, .1);
+      border: 1px solid rgba(255, 191, 15, .2);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #92400e;
+      margin-bottom: 12px;
+    }
+
+    .faculty-title {
+      font-size: 32px;
+      font-weight: 950;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .faculty-subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .faculty-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: all var(--transition);
+      border: 1px solid rgba(226, 232, 240, .95);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .faculty-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .faculty-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .faculty-card:hover::before {
+      opacity: 1;
+    }
+
+    .faculty-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      margin-bottom: 20px;
+      transition: all var(--transition);
+    }
+
+    .faculty-card:hover .faculty-icon {
+      transform: scale(1.1) rotate(5deg);
+      background: var(--primary);
+      color: white;
+    }
+
+    .faculty-name {
+      font-size: 20px;
+      font-weight: 950;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .faculty-description {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .faculty-programs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .program-tag {
+      padding: 6px 12px;
+      background: rgba(226, 236, 247, .85);
+      color: var(--primary);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid rgba(30, 108, 184, .1);
+    }
+
+    .faculty-link {
+      font-size: 14px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .faculty-link:hover {
+      color: var(--primary-dark);
+      gap: 10px;
+    }
+
+    .faculty-link::after {
+      content: '→';
+      font-size: 16px;
+      font-weight: 900;
+      transition: transform var(--transition);
+    }
+
+    .faculty-link:hover::after {
+      transform: translateX(4px);
+    }
+
+    /* =========================
+       5) FOOTER
+    ========================= */
+    .footer {
+      width: 100%;
+      background: var(--primary-dark);
+      color: white;
+      padding: 60px 0 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-yellow), var(--primary-light));
+      opacity: 0.8;
+    }
+
+    .footer-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 48px);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-title {
+      font-size: 18px;
+      font-weight: 950;
+      margin-bottom: 8px;
+      color: #fff;
+      position: relative;
+      padding-bottom: 12px;
+    }
+
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--accent-yellow);
+      border-radius: 2px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .footer-logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: white;
+      padding: 6px;
+    }
+
+    .footer-logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .footer-logo-small {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 700;
+    }
+
+    .footer-logo-main {
+      font-size: 14px;
+      color: white;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .footer-description {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      background: var(--accent-yellow);
+      color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-link {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-link:hover {
+      color: var(--accent-yellow);
+      transform: translateX(4px);
+    }
+
+    .footer-link::before {
+      content: '→';
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-link:hover::before {
+      opacity: 1;
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .footer-contact-item i {
+      color: var(--accent-yellow);
+      font-size: 16px;
+      margin-top: 2px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .copyright {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-legal a {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-legal a:hover {
+      color: var(--accent-yellow);
+    }
+
+    /* =========================
+       MOBILE PANELS & OVERLAY
+    ========================= */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.16s ease;
+      z-index: 6000;
+      backdrop-filter: blur(5px);
+    }
+
+    .overlay[data-open='true'] {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .aud-panel,
+    .nav-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(360px, 92vw);
+      height: 100vh;
+      background: #ffffff;
+      border-left: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      z-index: 6500;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .aud-panel {
+      width: min(380px, calc(100vw - 24px));
+      top: 56px;
+      right: 12px;
+      height: calc(100vh - 72px);
+      border-radius: 14px;
+    }
+
+    .aud-panel[data-open='true'],
+    .nav-panel[data-open='true'] {
+      transform: translateX(0);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: #0f172a;
+      text-transform: uppercase;
+    }
+
+    .panel-body {
+      padding: 16px;
+      overflow: auto;
+      flex: 1;
+    }
+
+    /* Mobile List */
+    .m-list,
+    .nav-mobile-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .m-group,
+    .nav-mobile-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .m-group-btn,
+    .nav-mobile-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px;
+      border: 0;
+      background: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 800;
+      color: #0f172a;
+      transition: background-color 0.2s ease;
+    }
+
+    .m-group-btn:hover,
+    .nav-mobile-btn:hover,
+    .m-group-btn[aria-expanded='true'],
+    .nav-mobile-btn[aria-expanded='true'] {
+      background: #f8fafc;
+    }
+
+    .m-sub,
+    .nav-mobile-sub {
+      border-top: 1px solid var(--border);
+      padding: 8px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .m-group-btn[aria-expanded='true']+.m-sub,
+    .nav-mobile-btn[aria-expanded='true']+.nav-mobile-sub {
+      max-height: 500px;
+      padding: 8px;
+    }
+
+    .m-sub a,
+    .nav-mobile-sub>a {
+      display: block;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #111827;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .m-sub a:hover,
+    .nav-mobile-sub>a:hover {
+      background: #f1f5f9;
+      transform: translateX(4px);
+      border-left-color: var(--accent-yellow);
+    }
+
+    /* Mobile Submenu Level 2 */
+    .nav-mobile-sub-box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 6px;
+    }
+
+    .nav-mobile-subbtn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border: 0;
+      background: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 700;
+      color: #111827;
+      transition: background-color 0.2s ease;
+    }
+
+    .nav-mobile-subbtn:hover,
+    .nav-mobile-subbtn[aria-expanded='true'] {
+      background: #f8fafc;
+    }
+
+    .nav-mobile-sub2 {
+      border-top: 1px dashed rgba(15, 23, 42, 0.12);
+      padding: 8px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .nav-mobile-subbtn[aria-expanded='true']+.nav-mobile-sub2 {
+      max-height: 300px;
+      padding: 8px;
+    }
+
+    .nav-mobile-sub2 a {
+      display: block;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      color: #111827;
+      transition: all 0.2s ease;
+    }
+
+    .nav-mobile-sub2 a:hover {
+      background: #f1f5f9;
+      transform: translateX(4px);
+    }
+
+    .nav-mobile-cta {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .full {
+      width: 100%;
+    }
+
+    /* =========================
+       UTILITY CLASSES
+    ========================= */
+    .is-hidden {
+      display: none !important;
+    }
+
+    .section {
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes newsFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+    @media (max-width: 680px) {
+      .aud-nav {
+        display: none;
+      }
+
+      .aud-actions {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .nav-actions {
+        display: flex;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .utama {
+        grid-template-columns: 1fr;
+        padding: 40px 0 60px;
+        gap: 30px;
+      }
+
+      .slides {
+        height: 280px;
+      }
+
+      .kiri {
+        text-align: center;
+      }
+
+      .cta-row {
+        justify-content: center;
+      }
+
+      .mini-nav {
+        top: 106px;
+      }
+
+      .mini-nav .wrap {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+
+      .mini-links {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .portals-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .news-layout {
+        flex-direction: column;
+        min-height: auto;
+      }
+
+      .news-list {
+        max-height: none;
+        overflow-y: visible;
+        padding-right: 0;
+      }
+
+      .news-headline {
+        margin-bottom: 24px;
+      }
+
+      .event-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .faculty-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .news-section,
+      .portal-section,
+      .event-section,
+      .faculty-section {
+        padding: 40px 0;
+      }
+
+      .news-title,
+      .portal-title,
+      .event-title,
+      .faculty-title {
+        font-size: 28px;
+      }
+
+      .news-headline-img-wrap {
+        height: 200px;
+      }
+
+      .news-filters {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding: 6px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .news-filters::-webkit-scrollbar {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .portals-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .news-header,
+      .event-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .event-cta {
+        align-self: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .utama {
+        padding: 30px 0 40px;
+      }
+
+      .kiri h1 {
+        font-size: 24px;
+      }
+
+      .cta-row {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+
+      .btn-utama,
+      .btn-outline {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .news-item {
+        flex-direction: column;
+      }
+
+      .news-item-media {
+        width: 100%;
+        height: 140px;
+        flex: 0 0 auto;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-legal {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .news-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .news-headline-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .news-item-meta {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .news-pagination {
+        width: 100%;
+        gap: 8px;
+      }
+
+      .page-btn {
+        flex: 1 1 90px;
+        text-align: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <!-- Audience Bar -->
+    <div class="audience-bar">
+      <div class="container audience-inner">
+        <div class="aud-left">
+          <div class="social">
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M13 22v-8h3l1-4h-4V7c0-1.1.3-2 2-2h2V1h-3c-3.3 0-5 2-5 5v4H8v4h3v8h2z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z" />
+              </svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.8 4.6 12 4.6 12 4.6s-5.8 0-7.5.5A3 3 0 0 0 2.4 7.2a31 31 0 0 0 0 9.6 3 3 0 0 0 2.1 2.1c1.7.5 7.5.5 7.5.5s5.8 0 7.5-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 22 12a31 31 0 0 0-.4-4.8zM10 15.5v-7l6 3.5-6 3.5z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Desktop Audience Navigation -->
+        <ul class="aud-nav" id="audienceNav">
+          <li class="aud-item has-dropdown">
+            <button class="aud-toggle" type="button" aria-expanded="false">
+              Kuesioner Mahasiswa
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="aud-dropdown">
+              <a href="#" class="aud-link">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran ITB Widyagama Lumajang</a>
+              <a href="#" class="aud-link">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Fakultas Ekonomi dan
+                Bisnis</a>
+              <a href="#" class="aud-link">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Akuntansi</a>
+              <a href="#" class="aud-link">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Informatika</a>
+              <a href="#" class="aud-link">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Manajemen</a>
+              <a href="#" class="aud-link">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Magister
+                Manajemen</a>
+              <a href="#" class="aud-link">Kuesioner Kepuasan Layanan Akademik</a>
+              <a href="#" class="aud-link">Kuesioner Kepuasan Terhadap Dosen</a>
+              <a href="#" class="aud-link">Kuesioner Kepuasan Layanan Kegiatan Kemahasiswaan</a>
+            </div>
+          </li>
+
+          <li class="aud-item has-dropdown">
+            <button class="aud-toggle" type="button" aria-expanded="false">
+              Penerimaan Mahasiswa
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="aud-dropdown">
+              <a href="#" class="aud-link">Pendaftaran Mahasiswa Baru</a>
+              <a href="#" class="aud-link">Pengumuman Hasil Seleksi</a>
+              <a href="#" class="aud-link">Rekognisi Pembelajaran Lampau</a>
+            </div>
+          </li>
+
+          <li class="aud-item has-dropdown">
+            <button class="aud-toggle" type="button" aria-expanded="false">
+              Mahasiswa
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="aud-dropdown">
+              <a href="#" class="aud-link">Layanan Mahasiswa</a>
+              <a href="#" class="aud-link">Kuliah Kerja Nyata</a>
+              <a href="#" class="aud-link">Unit Kegiatan Mahasiswa</a>
+              <a href="#" class="aud-link">Prestasi Mahasiswa</a>
+              <a href="#" class="aud-link">Daftar Beasiswa</a>
+              <a href="#" class="aud-link">Program Kreatifitas Mahasiswa</a>
+            </div>
+          </li>
+
+          <li class="aud-item has-dropdown">
+            <button class="aud-toggle" type="button" aria-expanded="false">
+              Alumni
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="aud-dropdown">
+              <a href="#" class="aud-link">Tracer Study</a>
+              <a href="#" class="aud-link">Tracer Pengguna</a>
+              <a href="#" class="aud-link">Laporan Tracer Study</a>
+            </div>
+          </li>
+
+          <li class="aud-item has-dropdown">
+            <button class="aud-toggle" type="button" aria-expanded="false">
+              Career Center
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="aud-dropdown">
+              <a href="#" class="aud-link">Informasi Pusat Karir</a>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Mobile: 3 dots -->
+        <div class="aud-actions">
+          <button id="audHamburger" class="icon-btn" type="button" aria-label="Menu layanan pengguna"
+            aria-expanded="false">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 6.5h.01M12 12h.01M12 17.5h.01" stroke-width="3" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navbar -->
+    <div class="navbar">
+      <div class="container nav-inner">
+        <a href="#" class="brand" aria-label="ITB Widyagama Lumajang">
+          <img class="logo-img" src="Untitled.png" alt="Logo ITB Widyagama Lumajang" />
+          <span class="brand-text">
+            <span class="brand-small">Institut Teknologi dan Bisnis</span>
+            <strong class="brand-main">Widya Gama Lumajang</strong>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <ul class="nav-links" id="desktopNav">
+          <li class="has-dropdown">
+            <button class="dd-toggle" type="button" aria-expanded="false">
+              Tentang Wiga
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="dropdown">
+              <!-- PROFIL SUBMENU -->
+              <div class="submenu-wrap">
+                <button class="sub-toggle" type="button" aria-expanded="false">
+                  <span>
+                    <span class="sub-title">Profil</span>
+                    <span class="sub-hint">Informasi dasar kampus</span>
+                  </span>
+                  <svg class="caret caret-right" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 6l6 6-6 6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="submenu">
+                  <a href="#" class="menu-item">Sejarah</a>
+                  <a href="#" class="menu-item">Identitas</a>
+                  <a href="#" class="menu-item">Visi Misi</a>
+                  <a href="#" class="menu-item">Sarana Prasarana</a>
+                  <a href="#" class="menu-item">Perencanaan Strategi</a>
+                  <a href="#" class="menu-item">Akreditasi</a>
+                </div>
+              </div>
+
+              <!-- STRUKTUR SUBMENU -->
+              <div class="submenu-wrap">
+                <button class="sub-toggle" type="button" aria-expanded="false">
+                  <span>
+                    <span class="sub-title">Struktur</span>
+                    <span class="sub-hint">Organisasi dan kepemimpinan</span>
+                  </span>
+                  <svg class="caret caret-right" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 6l6 6-6 6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="submenu">
+                  <a href="#" class="menu-item">Struktur Organisasi</a>
+                  <a href="#" class="menu-item">Senat Akademik</a>
+                  <a href="#" class="menu-item">Pimpinan</a>
+                  <a href="#" class="menu-item">Tenaga Kependidikan</a>
+                </div>
+              </div>
+
+              <div class="menu-divider"></div>
+              <a href="#" class="menu-item">Lembaga Mitra</a>
+              <a href="#" class="menu-item">Prestasi & Penghargaan</a>
+            </div>
+          </li>
+
+          <li class="has-dropdown">
+            <button class="dd-toggle" type="button" aria-expanded="false">
+              Fakultas
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="dropdown">
+              <div class="submenu-wrap">
+                <button class="sub-toggle" type="button" aria-expanded="false">
+                  <span>
+                    <span class="sub-title">Fakultas Teknik Dan Informatika</span>
+                    <span class="sub-hint">Program studi Teknik</span>
+                  </span>
+                  <svg class="caret caret-right" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 6l6 6-6 6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="submenu">
+                  <a href="#" class="menu-item">S1 Informatika</a>
+                </div>
+              </div>
+
+              <div class="submenu-wrap">
+                <button class="sub-toggle" type="button" aria-expanded="false">
+                  <span>
+                    <span class="sub-title">Fakultas Ekonomi Dan Bisnis</span>
+                    <span class="sub-hint">Program studi ekonomi & bisnis</span>
+                  </span>
+                  <svg class="caret caret-right" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 6l6 6-6 6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div class="submenu">
+                  <a href="#" class="menu-item">S1 Akuntansi</a>
+                  <a href="#" class="menu-item">S1 Manajemen</a>
+                  <a href="#" class="menu-item">Magister Manajemen</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="has-dropdown">
+            <button class="dd-toggle" type="button" aria-expanded="false">
+              Lembaga & UPT
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="dropdown">
+              <div class="menu-title">Lembaga</div>
+              <a href="#" class="menu-item">Lembaga Penelitian & Pengabdian Kepada Masyarakat</a>
+              <a href="#" class="menu-item">Lembaga Penjaminan Mutu dan Pengawasan Internal</a>
+              <a href="#" class="menu-item">Lembaga Pusat Unggulan IPTEK PT</a>
+              <div class="menu-divider"></div>
+              <div class="menu-title">Unit Pelaksana Teknis</div>
+              <a href="#" class="menu-item">UPT Perpustakaan</a>
+              <a href="#" class="menu-item">UPT Laboratorium</a>
+              <a href="#" class="menu-item">UPT Teknologi Informasi</a>
+            </div>
+          </li>
+
+          <li class="has-dropdown">
+            <button class="dd-toggle" type="button" aria-expanded="false">
+              Kerjasama
+              <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="dropdown">
+              <div class="menu-title">Kerjasama Institusi</div>
+              <a href="#" class="menu-item">Dalam Negeri</a>
+              <a href="#" class="menu-item">Luar Negeri</a>
+              <div class="menu-divider"></div>
+              <a href="#" class="menu-item">MoU & Dokumen Kerjasama</a>
+              <a href="#" class="menu-item">Program/Proyek Kolaborasi</a>
+            </div>
+          </li>
+
+          <!-- PEDOMAN TANPA DROPDOWN -->
+          <li>
+            <a href="#" class="nav-link">Pedoman</a>
+          </li>
+        </ul>
+
+        <!-- Desktop CTA - DIHAPUS -->
+        <div class="nav-cta">
+          <!-- Tombol dihapus sesuai permintaan -->
+        </div>
+
+        <!-- Mobile Hamburger -->
+        <div class="nav-actions">
+          <button id="navHamburger" class="icon-btn" type="button" aria-label="Menu utama" aria-expanded="false">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke-width="2.2" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Overlay -->
+  <div id="overlay" class="overlay" data-open="false"></div>
+
+  <!-- Audience Panel Mobile -->
+  <aside id="audPanel" class="aud-panel" data-open="false" aria-modal="true" aria-label="Layanan Pengguna">
+    <div class="panel-head">
+      <div class="panel-title">Layanan Pengguna</div>
+      <button id="audClose" class="icon-btn" type="button" aria-label="Tutup menu audience">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke-width="2.2" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+    <div class="panel-body">
+      <ul class="m-list">
+        <li class="m-group">
+          <button class="m-group-btn" type="button" aria-expanded="false">
+            <span>Kuesioner Mahasiswa</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="m-sub">
+            <a href="#">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran ITB Widyagama Lumajang</a>
+            <a href="#">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Fakultas Ekonomi dan Bisnis</a>
+            <a href="#">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Akuntansi</a>
+            <a href="#">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Informatika</a>
+            <a href="#">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Manajemen</a>
+            <a href="#">Kuesioner Pemahaman Visi Misi Tujuan dan Sasaran Prodi. Magister Manajemen</a>
+            <a href="#">Kuesioner Kepuasan Layanan Akademik</a>
+            <a href="#">Kuesioner Kepuasan Terhadap Dosen</a>
+            <a href="#">Kuesioner Kepuasan Layanan Kegiatan Kemahasiswaan</a>
+          </div>
+        </li>
+
+        <li class="m-group">
+          <button class="m-group-btn" type="button" aria-expanded="false">
+            <span>Penerimaan Mahasiswa</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="m-sub">
+            <a href="#">Pendaftaran Mahasiswa Baru</a>
+            <a href="#">Pengumuman Hasil Seleksi</a>
+            <a href="#">Rekognisi Pembelajaran Lampau</a>
+          </div>
+        </li>
+
+        <li class="m-group">
+          <button class="m-group-btn" type="button" aria-expanded="false">
+            <span>Mahasiswa</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="m-sub">
+            <a href="#">Layanan Mahasiswa</a>
+            <a href="#">Kuliah Kerja Nyata</a>
+            <a href="#">Unit Kegiatan Mahasiswa</a>
+            <a href="#">Prestasi Mahasiswa</a>
+            <a href="#">Daftar Beasiswa</a>
+            <a href="#">Program Kreatifitas Mahasiswa</a>
+          </div>
+        </li>
+
+        <li class="m-group">
+          <button class="m-group-btn" type="button" aria-expanded="false">
+            <span>Alumni</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="m-sub">
+            <a href="#">Tracer Study</a>
+            <a href="#">Tracer Pengguna</a>
+            <a href="#">Laporan Tracer Study</a>
+          </div>
+        </li>
+
+        <li class="m-group">
+          <button class="m-group-btn" type="button" aria-expanded="false">
+            <span>Career Center</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="m-sub">
+            <a href="#">Informasi Pusat Karir</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Navbar Panel Mobile -->
+  <aside id="navPanel" class="nav-panel" data-open="false" aria-modal="true" aria-label="Menu Utama">
+    <div class="panel-head">
+      <div class="panel-title">Menu</div>
+      <button id="navClose" class="icon-btn" type="button" aria-label="Tutup menu utama">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke-width="2.2" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+    <div class="panel-body">
+      <ul class="nav-mobile-list">
+        <li class="nav-mobile-item">
+          <button class="nav-mobile-btn" type="button" aria-expanded="false">
+            <span>Tentang Wiga</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="nav-mobile-sub">
+            <div class="nav-mobile-sub-box">
+              <button class="nav-mobile-subbtn" type="button" aria-expanded="false">
+                <span>Profil</span>
+                <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="nav-mobile-sub2">
+                <a href="#">Sejarah</a>
+                <a href="#">Identitas</a>
+                <a href="#">Visi Misi</a>
+                <a href="#">Sarana Prasarana</a>
+                <a href="#">Perencanaan Strategi</a>
+                <a href="#">Akreditasi</a>
+              </div>
+            </div>
+
+            <div class="nav-mobile-sub-box">
+              <button class="nav-mobile-subbtn" type="button" aria-expanded="false">
+                <span>Struktur</span>
+                <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="nav-mobile-sub2">
+                <a href="#">Struktur Organisasi</a>
+                <a href="#">Senat Akademik</a>
+                <a href="#">Pimpinan</a>
+                <a href="#">Tenaga Kependidikan</a>
+              </div>
+            </div>
+
+            <a href="#">Lembaga Mitra</a>
+            <a href="#">Prestasi & Penghargaan</a>
+          </div>
+        </li>
+
+        <li class="nav-mobile-item">
+          <button class="nav-mobile-btn" type="button" aria-expanded="false">
+            <span>Fakultas</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="nav-mobile-sub">
+            <div class="nav-mobile-sub-box">
+              <button class="nav-mobile-subbtn" type="button" aria-expanded="false">
+                <span>Fakultas Teknologi Dan Informatika</span>
+                <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="nav-mobile-sub2">
+                <a href="#">S1 Informatika</a>
+              </div>
+            </div>
+
+            <div class="nav-mobile-sub-box">
+              <button class="nav-mobile-subbtn" type="button" aria-expanded="false">
+                <span>Fakultas Ekonomi Dan Bisnis</span>
+                <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="nav-mobile-sub2">
+                <a href="#">S1 Akuntansi</a>
+                <a href="#">S1 Manajemen</a>
+                <a href="#">Magister Manajemen</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-mobile-item">
+          <button class="nav-mobile-btn" type="button" aria-expanded="false">
+            <span>Lembaga & UPT</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="nav-mobile-sub">
+            <div style="font-weight:800;color:var(--accent-navy);padding:12px 12px 8px;">Lembaga</div>
+            <a href="#">Lembaga Penelitian & Pengabdian Kepada Masyarakat</a>
+            <a href="#">Lembaga Penjaminan Mutu dan Pengawasan Internal</a>
+            <a href="#">Lembaga Pusat Unggulan IPTEK PT</a>
+
+            <div style="font-weight:800;color:var(--accent-navy);padding:12px 12px 8px;">UPT</div>
+            <a href="#">UPT Perpustakaan</a>
+            <a href="#">UPT Laboratorium</a>
+            <a href="#">UPT Teknologi Informasi</a>
+          </div>
+        </li>
+
+        <li class="nav-mobile-item">
+          <button class="nav-mobile-btn" type="button" aria-expanded="false">
+            <span>Kerjasama</span>
+            <svg class="caret" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="nav-mobile-sub">
+            <div style="font-weight:800;color:var(--accent-navy);padding:12px 12px 8px;">Kerjasama Institusi</div>
+            <a href="#">Dalam Negeri</a>
+            <a href="#">Luar Negeri</a>
+            <a href="#">MoU & Dokumen Kerjasama</a>
+            <a href="#">Program/Proyek Kolaborasi</a>
+          </div>
+        </li>
+
+        <!-- PEDOMAN TANPA DROPDOWN DI MOBILE -->
+        <li class="nav-mobile-item">
+          <a href="#" class="nav-mobile-btn"
+            style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 12px; border: 0; background: transparent; cursor: pointer; text-align: left; font-weight: 800; color: #0f172a;">
+            <span>Pedoman</span>
+            <!-- Tidak ada caret karena tanpa dropdown -->
+          </a>
+        </li>
+      </ul>
+
+      <!-- NAV MOBILE CTA DIHAPUS -->
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="utama">
+    <div class="kiri">
+      <h1>Institut Teknologi Dan bisnis</h1>
+      <h1>Widyagama Lumajang</h1>
+      <p>
+        Mencetak lulusan unggul di bidang teknologi dan bisnis dengan karakter kuat,
+        inovatif, dan siap bersaing di era digital
+      </p>
+      <div class="cta-row">
+        <a class="btn-utama" href="#">Pendaftaran</a>
+        <a class="btn-outline" href="#">Lihat Profil</a>
+      </div>
+    </div>
+
+    <div class="kanan">
+      <div class="slider" id="campusSlider" aria-label="Slider foto kampus">
+        <div class="slides" aria-live="polite">
+          <img class="slide is-active"
+            src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&h=400&fit=crop"
+            alt="Gedung kampus tampak depan" />
+          <img class="slide" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&h=400&fit=crop"
+            alt="Area lobi / fasilitas kampus" />
+          <img class="slide" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop"
+            alt="Suasana kegiatan mahasiswa di kampus" />
+        </div>
+        <button class="nav prev" type="button" aria-label="Sebelumnya">‹</button>
+        <button class="nav next" type="button" aria-label="Berikutnya">›</button>
+        <div class="dots" role="tablist" aria-label="Navigasi slide">
+          <button class="dot is-active" type="button" aria-label="Slide 1" data-slide="0"></button>
+          <button class="dot" type="button" aria-label="Slide 2" data-slide="1"></button>
+          <button class="dot" type="button" aria-label="Slide 3" data-slide="2"></button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mini Navigation -->
+
+
+  <!-- 1) BERITA -->
+  <section id="berita" class="news-section section">
+    <div class="news-container">
+
+      <div class="news-header">
+        <div class="news-title-wrap">
+          <div class="news-chip">Update Kampus</div>
+          <h2 class="news-title">Pengumuman & Informasi Akademik</h2>
+          <p class="news-subtitle">
+            Sorotan pengumuman resmi, jadwal akademik, dan panduan terbaru ITB Widyagama Lumajang.
+          </p>
+        </div>
+
+        <div class="news-filters" aria-label="Filter kategori berita">
+          <button type="button" class="news-filter-btn is-active" data-filter="all">Semua</button>
+          <button type="button" class="news-filter-btn" data-filter="pengumuman">Pengumuman</button>
+          <button type="button" class="news-filter-btn" data-filter="informasi">Informasi Akademik</button>
+        </div>
+      </div>
+
+      <div class="news-layout">
+        <!-- Headline -->
+        <article class="news-headline" data-category="pengumuman,informasi">
+          <div class="news-headline-img-wrap">
+            <img src="https://picsum.photos/900/500?random=21" alt="Pengumuman Matrikulasi" class="news-headline-img">
+            <div class="news-headline-badge">Pengumuman</div>
+          </div>
+          <div class="news-headline-body">
+            <span class="news-headline-tag">Informasi Akademik</span>
+            <h3 class="news-headline-title">Jadwal Matrikulasi Program Studi Magister Manajemen</h3>
+            <p class="news-headline-meta"><span>By Devi</span><span>September 22, 2025</span><span>Informasi Akademik, Pengumuman</span></p>
+            <p class="news-headline-excerpt">
+              Jadwal lengkap matrikulasi untuk mahasiswa baru Magister Manajemen, termasuk orientasi awal dan materi
+              pengenalan program.
+            </p>
+            <a href="#" class="news-headline-link">Baca Selengkapnya</a>
+          </div>
+        </article>
+
+        <!-- List -->
+        <div class="news-list" aria-label="Daftar berita">
+          <article class="news-item" data-category="pengumuman">
+            <div class="news-item-media">
+              <img class="news-item-thumb" src="https://picsum.photos/200/200?random=11" alt="Pengumuman Bantuan Pendidikan">
+            </div>
+            <div class="news-item-content">
+              <span class="news-item-tag tag--pengumuman">Pengumuman</span>
+              <h3 class="news-item-title">Pengumuman Penerima Bantuan Pendidikan dan KIP TA 2023/2024</h3>
+              <p class="news-item-meta">By Devi • December 4, 2023</p>
+              <p class="news-item-excerpt">Daftar penerima bantuan pendidikan dan KIP untuk tahun ajaran 2023/2024.</p>
+              <a href="#" class="news-item-link">Lihat Pengumuman</a>
+            </div>
+          </article>
+
+          <article class="news-item" data-category="pengumuman">
+            <div class="news-item-media">
+              <img class="news-item-thumb" src="https://picsum.photos/200/200?random=22" alt="Pengumuman Lulus Seleksi">
+            </div>
+            <div class="news-item-content">
+              <span class="news-item-tag tag--pengumuman">Pengumuman</span>
+              <h3 class="news-item-title">Pengumuman Lulus Seleksi Penerimaan Calon Mahasiswa Baru TA 2023/2024</h3>
+              <p class="news-item-meta">By Devi • November 1, 2023</p>
+              <p class="news-item-excerpt">Nama-nama calon mahasiswa baru yang dinyatakan lulus seleksi.</p>
+              <a href="#" class="news-item-link">Lihat Pengumuman</a>
+            </div>
+          </article>
+
+          <article class="news-item" data-category="pengumuman">
+            <div class="news-item-media">
+              <img class="news-item-thumb" src="https://picsum.photos/200/200?random=23" alt="Penerimaan MABA Gelombang 1">
+            </div>
+            <div class="news-item-content">
+              <span class="news-item-tag tag--pengumuman">Pengumuman</span>
+              <h3 class="news-item-title">PENGUMUMAN PENERIMAAN MABA GELOMBANG 1 (SUSULAN)</h3>
+              <p class="news-item-meta">By Devi • May 29, 2023</p>
+              <p class="news-item-excerpt">Informasi kelulusan susulan untuk penerimaan mahasiswa baru gelombang 1.</p>
+              <a href="#" class="news-item-link">Lihat Pengumuman</a>
+            </div>
+          </article>
+
+          <article class="news-item" data-category="informasi">
+            <div class="news-item-media">
+              <img class="news-item-thumb" src="https://picsum.photos/200/200?random=24" alt="Jadwal Perkuliahan Ganjil">
+            </div>
+            <div class="news-item-content">
+              <span class="news-item-tag tag--informasi">Informasi Akademik</span>
+              <h3 class="news-item-title">JADWAL PERKULIAHAN SEMESTER GANJIL TA 2025/2026</h3>
+              <p class="news-item-meta">By Devi • September 10, 2025</p>
+              <p class="news-item-excerpt">Pembaharuan jadwal kuliah semester ganjil sesuai kalender akademik 2025/2026.</p>
+              <a href="#" class="news-item-link">Baca Detail</a>
+            </div>
+          </article>
+
+          <article class="news-item" data-category="informasi">
+            <div class="news-item-media">
+              <img class="news-item-thumb" src="https://picsum.photos/200/200?random=25" alt="Jadwal UTS">
+            </div>
+            <div class="news-item-content">
+              <span class="news-item-tag tag--informasi">Informasi Akademik</span>
+              <h3 class="news-item-title">Jadwal UTS Semester Genap TA 2024/2025</h3>
+              <p class="news-item-meta">By Devi • April 29, 2025</p>
+              <p class="news-item-excerpt">Rincian jadwal ujian tengah semester genap tahun ajaran 2024/2025.</p>
+              <a href="#" class="news-item-link">Baca Detail</a>
+            </div>
+          </article>
+
+          <article class="news-item" data-category="informasi">
+            <div class="news-item-media">
+              <img class="news-item-thumb" src="https://picsum.photos/200/200?random=26" alt="Update Jadwal Perkuliahan">
+            </div>
+            <div class="news-item-content">
+              <span class="news-item-tag tag--informasi">Informasi Akademik</span>
+              <h3 class="news-item-title">UPDATE JADWAL PERKULIAHAN SEMESTER GENAP TA 2024/2025</h3>
+              <p class="news-item-meta">By Devi • February 17, 2025</p>
+              <p class="news-item-excerpt">Perubahan jadwal perkuliahan semester genap yang perlu dicermati mahasiswa.</p>
+              <a href="#" class="news-item-link">Baca Detail</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="news-pagination" aria-label="Pagination berita">
+        <button class="page-btn active" data-page="1">1</button>
+        <button class="page-btn" data-page="2">2</button>
+      </div>
+
+      <div class="news-docs">
+        <h3>Panduan dan Materi</h3>
+        <ul>
+          <li><a href="#">Pedoman-PKKMB-2023-Revisi.pdf</a><small>(99181 downloads)</small></li>
+          <li><a href="#">0-Pedoman-PMB-2022-Fix.pdf</a><small>(71625 downloads)</small></li>
+          <li><a href="#">Panduan-untuk-Mahasiswa-v1.0.pdf</a><small>(32745 downloads)</small></li>
+          <li><a href="#">Panduan-Tes-Potensi-Akademik.pdf</a><small>(67815 downloads)</small></li>
+          <li><a href="#">Surat-Pernyataan-Daftar-Ulang-2021.pdf</a><small>(3489 downloads)</small></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2) PORTAL -->
+  <section id="portal" class="portal-section section">
+    <div class="portal-container">
+
+      <div class="portal-header">
+        <div class="portal-badge" id="serviceCount">10 layanan tersedia</div>
+        <h2 class="portal-title">Portal Sistem ITB WIGA</h2>
+        <p class="portal-subtitle">Akses cepat ke seluruh layanan digital kampus ITB Widyagama Lumajang dalam satu
+          tempat.</p>
+
+        <div class="search-container">
+          <div class="search-wrapper">
+            <div class="search-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21l-4.35-4.35"></path>
+              </svg>
+            </div>
+            <input type="search" class="search-input" id="searchInput"
+              placeholder="Cari portal (nama atau deskripsi)..." aria-label="Cari portal sistem">
+          </div>
+          <div class="search-stats">
+            <div id="resultCount">Menampilkan 10 dari 10 portal</div>
+            <div style="opacity:.85">Tip: tekan <b>/</b> untuk fokus cari</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="recent-section" id="recentSection">
+        <h3 class="recent-title">Baru saja diakses</h3>
+        <div class="recent-chips" id="recentChips"></div>
+      </div>
+
+      <div class="portals-grid" id="portalsGrid" aria-label="Grid portal sistem"></div>
+
+    </div>
+  </section>
+
+  <!-- 3) EVENT -->
+  <section id="event" class="event-section section">
+    <div class="event-container">
+      <div class="event-header">
+        <div class="event-title-wrap">
+          <div class="event-chip">Agenda Kampus</div>
+          <h2 class="event-title">Event & Agenda</h2>
+          <p class="event-subtitle">Kegiatan terkini dan agenda mendatang. Cocok buat presentasi karena tampil seperti
+            "mini event hub".</p>
+        </div>
+        <a class="event-cta" href="#">Lihat Kalender Event →</a>
+      </div>
+
+      <div class="event-layout">
+        <!-- slider -->
+        <div class="ev-slider" aria-label="Slider event">
+          <div class="ev-stage">
+            <div class="ev-slide active" data-index="0">
+              <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80"
+                alt="Seminar Teknologi">
+              <div class="ev-overlay" aria-hidden="true"></div>
+              <div class="ev-caption">
+                <div class="ev-name">Seminar Nasional: Teknologi Masa Depan</div>
+                <div class="ev-date">Jumat, 15 Des 2025 • 09.00 WIB • Aula Utama</div>
+              </div>
+            </div>
+
+            <div class="ev-slide" data-index="1">
+              <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80"
+                alt="Workshop UI/UX">
+              <div class="ev-overlay" aria-hidden="true"></div>
+              <div class="ev-caption">
+                <div class="ev-name">Workshop: UI/UX Design untuk Pemula</div>
+                <div class="ev-date">Senin, 18 Des 2025 • 13.00 WIB • Lab Komputer 3</div>
+              </div>
+            </div>
+
+            <div class="ev-slide" data-index="2">
+              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80"
+                alt="Pameran Karya">
+              <div class="ev-overlay" aria-hidden="true"></div>
+              <div class="ev-caption">
+                <div class="ev-name">Pameran Karya Mahasiswa ITB WIGA</div>
+                <div class="ev-date">Rabu, 20 Des 2025 • 10.00–16.00 WIB • Gedung Serba Guna</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ev-controls">
+            <div class="ev-dots" aria-label="Indicator slide">
+              <span class="ev-dot active" data-slide="0" role="button" aria-label="Slide 1"></span>
+              <span class="ev-dot" data-slide="1" role="button" aria-label="Slide 2"></span>
+              <span class="ev-dot" data-slide="2" role="button" aria-label="Slide 3"></span>
+            </div>
+
+            <div class="ev-nav">
+              <button class="ev-btn" id="evPrev" type="button" aria-label="Slide sebelumnya">‹</button>
+              <button class="ev-btn" id="evNext" type="button" aria-label="Slide selanjutnya">›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- list -->
+        <div class="ev-list" aria-label="Daftar event ringkas">
+          <a href="#" class="ev-item">
+            <div>
+              <div class="ev-item-title">Kuliah Umum: Transformasi Digital</div>
+              <div class="ev-item-detail">12 Des • Ruang Multimedia • 09.00 WIB</div>
+            </div>
+            <span class="ev-tag">Terbuka</span>
+          </a>
+
+          <a href="#" class="ev-item">
+            <div>
+              <div class="ev-item-title">Open Booth PMB & Konsultasi</div>
+              <div class="ev-item-detail">15 Des • Lobby Kampus • 10.00 WIB</div>
+            </div>
+            <span class="ev-tag">PMB</span>
+          </a>
+
+          <a href="#" class="ev-item">
+            <div>
+              <div class="ev-item-title">Lomba Inovasi Mahasiswa</div>
+              <div class="ev-item-detail">18 Des • Aula Kampus • 13.00 WIB</div>
+            </div>
+            <span class="ev-tag">Internal</span>
+          </a>
+
+          <a href="#" class="ev-item">
+            <div>
+              <div class="ev-item-title">Meetup Alumni: Karier & Portofolio</div>
+              <div class="ev-item-detail">21 Des • Ruang Sidang • 15.30 WIB</div>
+            </div>
+            <span class="ev-tag">Alumni</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 5) FOOTER -->
+  <footer id="kontak" class="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-logo">
+            <img class="footer-logo-img" src="logo-web-itb-merah (1).png" alt="Logo ITB Widyagama Lumajang">
+            <div class="footer-logo-text">
+              <span class="footer-logo-small">Institut Teknologi dan Bisnis</span>
+              <strong class="footer-logo-main">Widya Gama Lumajang</strong>
+            </div>
+          </div>
+          <p class="footer-description">
+            Perguruan tinggi yang berkomitmen menghasilkan lulusan unggul di bidang teknologi dan bisnis, siap bersaing
+            di era digital.
+          </p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook">FB</a>
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="YouTube">YT</a>
+            <a href="#" aria-label="Twitter">TW</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-title">Tautan Cepat</h3>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Beranda</a>
+            <a href="#berita" class="footer-link">Berita & Informasi</a>
+            <a href="#portal" class="footer-link">Portal Sistem</a>
+            <a href="#event" class="footer-link">Event & Agenda</a>
+            <a href="#fakultas" class="footer-link">Fakultas & Prodi</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-title">Layanan Akademik</h3>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Penerimaan Mahasiswa Baru</a>
+            <a href="#" class="footer-link">Sistem Informasi Akademik</a>
+            <a href="#" class="footer-link">E-Learning</a>
+            <a href="#" class="footer-link">Perpustakaan Digital</a>
+            <a href="#" class="footer-link">Beasiswa</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-title">Kontak Kami</h3>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <i>📍</i>
+              <span>Jl. Soekarno Hatta No. 58, Lumajang, Jawa Timur</span>
+            </div>
+            <div class="footer-contact-item">
+              <i>📞</i>
+              <span>(0334) 881-123</span>
+            </div>
+            <div class="footer-contact-item">
+              <i>✉️</i>
+              <span>info@itbwigalumajang.ac.id</span>
+            </div>
+            <div class="footer-contact-item">
+              <i>🕐</i>
+              <span>Senin - Jumat, 08.00 - 16.00 WIB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">© 2025 ITB Widyagama Lumajang. Hak Cipta Dilindungi.</p>
+        <div class="footer-legal">
+          <a href="#">Kebijakan Privasi</a>
+          <a href="#">Syarat & Ketentuan</a>
+          <a href="#">Peta Situs</a>
+          <a href="#">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+    const $ = (sel, root = document) => root.querySelector(sel);
+
+    function lockScroll(on) {
+      document.body.style.overflow = on ? 'hidden' : '';
+      document.documentElement.style.overflow = on ? 'hidden' : '';
+    }
+
+    // ============================
+    // NAVIGASI UTAMA (File 1)
+    // ============================
+    function setupAudienceDesktop() {
+      const items = $$('.aud-item.has-dropdown');
+
+      items.forEach((item) => {
+        const btn = $('.aud-toggle', item);
+        const dropdown = $('.aud-dropdown', item);
+        if (!btn || !dropdown) return;
+
+        item.addEventListener('mouseenter', () => {
+          items.forEach((i) => {
+            i.classList.remove('open');
+            const b = $('.aud-toggle', i);
+            if (b) b.setAttribute('aria-expanded', 'false');
+          });
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        });
+
+        item.addEventListener('mouseleave', (e) => {
+          const relatedTarget = e.relatedTarget;
+          if (relatedTarget && dropdown.contains(relatedTarget)) return;
+
+          setTimeout(() => {
+            if (!item.matches(':hover') && !dropdown.matches(':hover')) {
+              item.classList.remove('open');
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          }, 100);
+        });
+
+        dropdown.addEventListener('mouseleave', (e) => {
+          const relatedTarget = e.relatedTarget;
+          if (relatedTarget && !item.contains(relatedTarget)) {
+            setTimeout(() => {
+              if (!item.matches(':hover') && !dropdown.matches(':hover')) {
+                item.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+              }
+            }, 100);
+          }
+        });
+      });
+    }
+
+    function setupNavbarDesktop() {
+      const dropdownParents = $$('.nav-links .has-dropdown');
+
+      dropdownParents.forEach((li) => {
+        const toggle = $('.dd-toggle', li);
+        const dropdown = $('.dropdown', li);
+        if (!toggle || !dropdown) return;
+
+        li.addEventListener('mouseenter', () => {
+          dropdownParents.forEach((other) => {
+            other.classList.remove('open');
+            const b = $('.dd-toggle', other);
+            if (b) b.setAttribute('aria-expanded', 'false');
+          });
+
+          $$('.submenu-wrap').forEach((wrap) => {
+            wrap.classList.remove('open');
+            const b = $('.sub-toggle', wrap);
+            if (b) b.setAttribute('aria-expanded', 'false');
+          });
+
+          li.classList.add('open');
+          toggle.setAttribute('aria-expanded', 'true');
+        });
+
+        li.addEventListener('mouseleave', (e) => {
+          const relatedTarget = e.relatedTarget;
+          if (relatedTarget && dropdown.contains(relatedTarget)) return;
+
+          setTimeout(() => {
+            if (!li.matches(':hover') && !dropdown.matches(':hover')) {
+              li.classList.remove('open');
+              toggle.setAttribute('aria-expanded', 'false');
+            }
+          }, 100);
+        });
+
+        dropdown.addEventListener('mouseleave', (e) => {
+          const relatedTarget = e.relatedTarget;
+          if (relatedTarget && !li.contains(relatedTarget)) {
+            setTimeout(() => {
+              if (!li.matches(':hover') && !dropdown.matches(':hover')) {
+                li.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+              }
+            }, 100);
+          }
+        });
+
+        const subWraps = $$('.submenu-wrap', dropdown);
+        subWraps.forEach((wrap) => {
+          const subBtn = $('.sub-toggle', wrap);
+          const submenu = $('.submenu', wrap);
+          if (!subBtn || !submenu) return;
+
+          wrap.addEventListener('mouseenter', () => {
+            subWraps.forEach((w) => {
+              w.classList.remove('open');
+              const b = $('.sub-toggle', w);
+              if (b) b.setAttribute('aria-expanded', 'false');
+            });
+
+            wrap.classList.add('open');
+            subBtn.setAttribute('aria-expanded', 'true');
+          });
+
+          wrap.addEventListener('mouseleave', (e) => {
+            const relatedTarget = e.relatedTarget;
+            if (relatedTarget && submenu.contains(relatedTarget)) return;
+
+            setTimeout(() => {
+              if (!wrap.matches(':hover') && !submenu.matches(':hover')) {
+                wrap.classList.remove('open');
+                subBtn.setAttribute('aria-expanded', 'false');
+              }
+            }, 100);
+          });
+
+          submenu.addEventListener('mouseleave', (e) => {
+            const relatedTarget = e.relatedTarget;
+            if (relatedTarget && !wrap.contains(relatedTarget)) {
+              setTimeout(() => {
+                if (!wrap.matches(':hover') && !submenu.matches(':hover')) {
+                  wrap.classList.remove('open');
+                  subBtn.setAttribute('aria-expanded', 'false');
+                }
+              }, 100);
+            }
+          });
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        const onAudience = e.target.closest('.audience-bar');
+        const onNav = e.target.closest('.navbar');
+        if (!onAudience && !onNav) {
+          $$('.nav-links .has-dropdown').forEach((li) => {
+            li.classList.remove('open');
+            const b = $('.dd-toggle', li);
+            if (b) b.setAttribute('aria-expanded', 'false');
+          });
+          $$('.aud-item.has-dropdown').forEach((item) => {
+            item.classList.remove('open');
+            const b = $('.aud-toggle', item);
+            if (b) b.setAttribute('aria-expanded', 'false');
+          });
+          $$('.submenu-wrap').forEach((wrap) => {
+            wrap.classList.remove('open');
+            const b = $('.sub-toggle', wrap);
+            if (b) b.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+    }
+
+    function setupAudienceMobilePanel() {
+      const overlay = $('#overlay');
+      const panel = $('#audPanel');
+      const openBtn = $('#audHamburger');
+      const closeBtn = $('#audClose');
+      if (!overlay || !panel || !openBtn || !closeBtn) return;
+
+      const openPanel = () => {
+        overlay.dataset.open = 'true';
+        panel.dataset.open = 'true';
+        openBtn.setAttribute('aria-expanded', 'true');
+        lockScroll(true);
+      };
+
+      const closePanel = () => {
+        panel.dataset.open = 'false';
+        openBtn.setAttribute('aria-expanded', 'false');
+        const anyNavOpen = $('#navPanel')?.dataset.open === 'true';
+        if (!anyNavOpen) overlay.dataset.open = 'false';
+        lockScroll(false);
+      };
+
+      openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        panel.dataset.open === 'true' ? closePanel() : openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+
+      const groupBtns = $$('.m-group-btn', panel);
+      groupBtns.forEach((btn) => {
+        const sub = btn.nextElementSibling;
+
+        btn.addEventListener('click', () => {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          groupBtns.forEach((b) => {
+            if (b !== btn) {
+              b.setAttribute('aria-expanded', 'false');
+              const s = b.nextElementSibling;
+              if (s) s.style.maxHeight = '0';
+            }
+          });
+
+          btn.setAttribute('aria-expanded', String(!isOpen));
+          if (sub) sub.style.maxHeight = !isOpen ? sub.scrollHeight + 'px' : '0';
+        });
+      });
+    }
+
+    function refreshParentNavSubHeight(fromEl) {
+      const parentSub = fromEl.closest('.nav-mobile-sub');
+      if (!parentSub) return;
+
+      const parentBtn = parentSub.previousElementSibling; // .nav-mobile-btn
+      if (!parentBtn || parentBtn.getAttribute('aria-expanded') !== 'true') return;
+
+      const apply = () => {
+        parentSub.style.maxHeight = parentSub.scrollHeight + 'px';
+      };
+
+      apply();
+      requestAnimationFrame(() => {
+        apply();
+        requestAnimationFrame(apply);
+      });
+      setTimeout(apply, 320);
+    }
+
+    function setupNavbarMobilePanel() {
+      const overlay = $('#overlay');
+      const panel = $('#navPanel');
+      const openBtn = $('#navHamburger');
+      const closeBtn = $('#navClose');
+      if (!overlay || !panel || !openBtn || !closeBtn) return;
+
+      const openPanel = () => {
+        overlay.dataset.open = 'true';
+        panel.dataset.open = 'true';
+        openBtn.setAttribute('aria-expanded', 'true');
+        lockScroll(true);
+      };
+
+      const closePanel = () => {
+        panel.dataset.open = 'false';
+        openBtn.setAttribute('aria-expanded', 'false');
+        const anyAudOpen = $('#audPanel')?.dataset.open === 'true';
+        if (!anyAudOpen) overlay.dataset.open = 'false';
+        lockScroll(false);
+      };
+
+      openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        panel.dataset.open === 'true' ? closePanel() : openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+
+      const level1Btns = $$('.nav-mobile-btn', panel);
+      level1Btns.forEach((btn) => {
+        const sub = btn.nextElementSibling;
+
+        btn.addEventListener('click', () => {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+          // tutup semua level-1 lain + reset nested level-2 nya
+          level1Btns.forEach((b) => {
+            if (b !== btn) {
+              b.setAttribute('aria-expanded', 'false');
+              const s = b.nextElementSibling;
+              if (s) {
+                s.style.maxHeight = '0';
+                $$('.nav-mobile-subbtn', s).forEach((sb) => sb.setAttribute('aria-expanded', 'false'));
+                $$('.nav-mobile-sub2', s).forEach((s2) => (s2.style.maxHeight = '0'));
+              }
+            }
+          });
+
+          btn.setAttribute('aria-expanded', String(!isOpen));
+          if (sub) {
+            sub.style.maxHeight = !isOpen ? sub.scrollHeight + 'px' : '0';
+            refreshParentNavSubHeight(sub);
+          }
+        });
+      });
+
+      const level2Btns = $$('.nav-mobile-subbtn', panel);
+      level2Btns.forEach((btn) => {
+        const sub = btn.nextElementSibling;
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!isOpen));
+
+          if (sub) {
+            sub.style.maxHeight = !isOpen ? sub.scrollHeight + 'px' : '0';
+            void sub.offsetHeight;
+          }
+
+          refreshParentNavSubHeight(btn);
+        });
+      });
+    }
+
+    function setupCampusSlider() {
+      const root = document.getElementById('campusSlider');
+      if (!root) return;
+
+      const slides = Array.from(root.querySelectorAll('.slide'));
+      const dots = Array.from(root.querySelectorAll('.dot'));
+      const prev = root.querySelector('.prev');
+      const next = root.querySelector('.next');
+
+      let idx = 0;
+      let timer = null;
+
+      const render = (n) => {
+        idx = (n + slides.length) % slides.length;
+        slides.forEach((el, i) => el.classList.toggle('is-active', i === idx));
+        dots.forEach((el, i) => el.classList.toggle('is-active', i === idx));
+      };
+
+      const go = (step) => render(idx + step);
+
+      const start = () => {
+        stop();
+        timer = setInterval(() => go(1), 4500);
+      };
+
+      const stop = () => {
+        if (timer) clearInterval(timer);
+        timer = null;
+      };
+
+      prev?.addEventListener('click', () => { go(-1); start(); });
+      next?.addEventListener('click', () => { go(1); start(); });
+
+      dots.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const n = Number(btn.dataset.slide || 0);
+          render(n);
+          start();
+        });
+      });
+
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+
+      render(0);
+      start();
+    }
+
+    // Mini Navigation active state
+    function setupMiniNav() {
+      const sections = ['berita', 'portal', 'event', 'fakultas', 'kontak'];
+      const links = $$('.mini-links a');
+
+      function updateActiveLink() {
+        const scrollPos = window.scrollY + 150;
+
+        sections.forEach((sectionId, index) => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            const offsetTop = section.offsetTop;
+            const offsetBottom = offsetTop + section.offsetHeight;
+
+            if (scrollPos >= offsetTop && scrollPos < offsetBottom) {
+              links.forEach(link => link.classList.remove('active'));
+              links[index]?.classList.add('active');
+            }
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveLink);
+      window.addEventListener('load', updateActiveLink);
+    }
+
+    // ============================
+    // BERITA, PORTAL, EVENT (File 2)
+    // ============================
+    /* NEWS: filter + pagination */
+    (() => {
+      const filterBtns = document.querySelectorAll('.news-filter-btn');
+      const items = Array.from(document.querySelectorAll('.news-item'));
+      const headline = document.querySelector('.news-headline');
+      const categories = Array.from(filterBtns).map(btn => btn.dataset.filter).filter(f => f && f !== 'all');
+
+      const pageNumBtns = Array.from(document.querySelectorAll('.news-pagination .page-btn[data-page]'));
+
+      let currentPage = 1;
+      const itemsPerPage = 4;
+      let filteredItems = [...items];
+
+      const parseCategories = (el) => (el?.dataset.category || '')
+        .split(',')
+        .map(cat => cat.trim())
+        .filter(Boolean);
+
+      const matchesCategory = (el, category) => {
+        if (!el) return false;
+        if (category === 'all') return true;
+        const cats = parseCategories(el);
+        return cats.includes(category);
+      };
+
+      function countByCategory() {
+        const counts = { all: items.length + (headline ? 1 : 0) };
+        categories.forEach(cat => counts[cat] = 0);
+
+        const sources = [...items, ...(headline ? [headline] : [])];
+        sources.forEach(el => {
+          parseCategories(el).forEach(cat => {
+            if (counts[cat] !== undefined) counts[cat] += 1;
+          });
+        });
+
+        filterBtns.forEach(btn => {
+          const f = btn.dataset.filter;
+          const label = btn.textContent.replace(/\s*\(\d+\)\s*$/, '').trim();
+          const n = counts[f] ?? counts.all ?? 0;
+          btn.innerHTML = `${label} <strong>(${n})</strong>`;
+        });
+      }
+
+      function filterItems(category) {
+        if (headline) {
+          const hideHeadline = category !== 'all' && !matchesCategory(headline, category);
+          headline.classList.toggle('is-hidden', hideHeadline);
+        }
+
+        filteredItems = items.filter(item => matchesCategory(item, category));
+        currentPage = 1;
+        showPage(currentPage);
+      }
+
+      function showPage(page) {
+        currentPage = page;
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        items.forEach(item => item.classList.add('is-hidden'));
+        filteredItems.slice(start, end).forEach(item => item.classList.remove('is-hidden'));
+
+        updatePagination();
+      }
+
+      function updatePagination() {
+        const totalPages = Math.max(1, Math.ceil(filteredItems.length / itemsPerPage));
+        pageNumBtns.forEach(btn => {
+          const pageNum = Number(btn.dataset.page);
+          btn.classList.toggle('active', pageNum === currentPage);
+          btn.style.display = pageNum <= totalPages ? 'inline-flex' : 'none';
+        });
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          filterItems(btn.dataset.filter);
+        });
+      });
+
+      pageNumBtns.forEach(btn => {
+        btn.addEventListener('click', () => showPage(Number(btn.dataset.page)));
+      });
+
+      countByCategory();
+      showPage(1);
+    })();
+
+    /* PORTAL: render + search + recent */
+    (() => {
+      const portals = [
+        { id: 'rpl', name: 'RPL', description: 'Sistem Rekam Jejak Pembelajaran dan portofolio mahasiswa', url: 'https://rpl.itbwigalumajang.ac.id', icon: '📊', status: 'Online' },
+        { id: 'siakad', name: 'SIAKAD', description: 'Sistem Informasi Akademik untuk mahasiswa dan dosen', url: 'https://siakad.itbwigalumajang.ac.id', icon: '🎓', status: 'Online' },
+        { id: 'simpeg', name: 'SIMPEG', description: 'Sistem Informasi Kepegawaian dan administrasi staf', url: 'https://simpeg.itbwigalumajang.ac.id', icon: '👨‍💼', status: 'Online' },
+        { id: 'elearning', name: 'E-LEARNING', description: 'Platform pembelajaran online dengan materi digital', url: 'https://elearning.itbwigalumajang.ac.id', icon: '💻', status: 'Online' },
+        { id: 'elibrary', name: 'E-LIBRARY', description: 'Perpustakaan digital dengan koleksi ebook dan jurnal', url: 'https://elibrary.itbwigalumajang.ac.id', icon: '📚', status: 'online' },
+        { id: 'repository', name: 'REPOSITORY', description: 'Arsip digital untuk karya ilmiah dan penelitian', url: 'https://repository.itbwigalumajang.ac.id', icon: '🗄️', status: 'Online' },
+        { id: 'ejournal', name: 'E-JOURNAL', description: 'Jurnal elektronik terbitan kampus dan mitra', url: 'https://ejournal.itbwigalumajang.ac.id', icon: '📰', status: 'Online' },
+        { id: 'sentraki', name: 'SENTRA KI', description: 'Sentra Kekayaan Intelektual dan inovasi kampus', url: 'https://sentraki.itbwigalumajang.ac.id', icon: '💡', status: 'Online' },
+        { id: 'gibei', name: 'GIBEI', description: 'Sistem informasi beasiswa dan bantuan pendidikan', url: 'https://gibei.itbwigalumajang.ac.id', icon: '🎯', status: 'Online' },
+        { id: 'webmail', name: 'WEBMAIL', description: 'Email institusi untuk staf, dosen, dan mahasiswa', url: 'https://webmail.itbwigalumajang.ac.id', icon: '✉️', status: 'Online' }
+      ];
+
+      const portalsGrid = document.getElementById('portalsGrid');
+      const searchInput = document.getElementById('searchInput');
+      const resultCount = document.getElementById('resultCount');
+      const serviceCount = document.getElementById('serviceCount');
+      const recentChips = document.getElementById('recentChips');
+      const recentSection = document.getElementById('recentSection');
+
+      let recentPortals = JSON.parse(localStorage.getItem('recentPortals')) || [];
+
+      function getDomain(url) {
+        try { return new URL(url).hostname; } catch { return url; }
+      }
+
+      function highlightText(text, term) {
+        if (!term) return text;
+        const safe = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${safe})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+      }
+
+      function addToRecent(portal) {
+        recentPortals = recentPortals.filter(p => p.id !== portal.id);
+        recentPortals.unshift(portal);
+        recentPortals = recentPortals.slice(0, 3);
+        localStorage.setItem('recentPortals', JSON.stringify(recentPortals));
+        updateRecentChips();
+        recentSection.style.display = 'block';
+      }
+
+      function updateRecentChips() {
+        recentChips.innerHTML = '';
+        if (recentPortals.length === 0) {
+          recentSection.style.display = 'none';
+          return;
+        }
+
+        recentPortals.forEach(portal => {
+          const chip = document.createElement('a');
+          chip.href = portal.url;
+          chip.className = 'recent-chip';
+          chip.target = '_blank';
+          chip.rel = 'noopener noreferrer';
+          chip.innerHTML = `<span class="icon">${portal.icon}</span><span>${portal.name}</span>`;
+          chip.addEventListener('click', () => addToRecent(portal));
+          recentChips.appendChild(chip);
+        });
+      }
+
+      function renderPortals(list) {
+        portalsGrid.innerHTML = '';
+
+        if (list.length === 0) {
+          portalsGrid.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon">🔍</div>
+              <h3 class="empty-title">Portal tidak ditemukan</h3>
+              <p class="empty-text">Tidak ada portal yang sesuai dengan pencarian. Coba kata kunci lain.</p>
+              <button class="reset-btn" id="resetSearch"><span>🔄</span> Tampilkan Semua</button>
+            </div>
+          `;
+          document.getElementById('resetSearch')?.addEventListener('click', () => {
+            searchInput.value = '';
+            renderPortals(portals);
+            searchInput.focus();
+          });
+          resultCount.textContent = `Menampilkan 0 dari ${portals.length} portal`;
+          return;
+        }
+
+        const term = searchInput.value.toLowerCase().trim();
+
+        list.forEach(portal => {
+          const card = document.createElement('a');
+          card.href = portal.url;
+          card.className = 'portal-card';
+          card.target = '_blank';
+          card.rel = 'noopener noreferrer';
+
+          const renderedName = term ? highlightText(portal.name, term) : portal.name;
+          const renderedDesc = term ? highlightText(portal.description, term) : portal.description;
+
+          card.innerHTML = `
+            <div class="card-header">
+              <div class="card-icon">${portal.icon}</div>
+            </div>
+            <h3 class="card-title">${renderedName}</h3>
+            <p class="card-description">${renderedDesc}</p>
+            <div class="card-footer">
+              <div class="card-url">${getDomain(portal.url)}</div>
+              <span class="card-action">Akses</span>
+            </div>
+          `;
+
+          card.addEventListener('click', () => addToRecent(portal));
+          portalsGrid.appendChild(card);
+        });
+
+        resultCount.textContent = `Menampilkan ${list.length} dari ${portals.length} portal`;
+      }
+
+      function performSearch() {
+        const term = searchInput.value.toLowerCase().trim();
+        if (!term) return renderPortals(portals);
+        const filtered = portals.filter(p =>
+          p.name.toLowerCase().includes(term) || p.description.toLowerCase().includes(term)
+        );
+        renderPortals(filtered);
+      }
+
+      function initPortal() {
+        serviceCount.textContent = `${portals.length} layanan tersedia`;
+        updateRecentChips();
+        renderPortals(portals);
+      }
+
+      searchInput.addEventListener('input', performSearch);
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          searchInput.value = '';
+          renderPortals(portals);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !e.target.matches('input, textarea')) {
+          e.preventDefault();
+          searchInput.focus();
+        }
+      });
+
+      initPortal();
+    })();
+
+    /* EVENT: slider */
+    (() => {
+      const slides = Array.from(document.querySelectorAll('.ev-slide'));
+      const dots = Array.from(document.querySelectorAll('.ev-dot'));
+      const prev = document.getElementById('evPrev');
+      const next = document.getElementById('evNext');
+
+      let idx = 0;
+      let timer = null;
+
+      function show(i) {
+        idx = (i + slides.length) % slides.length;
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        slides[idx].classList.add('active');
+        dots[idx].classList.add('active');
+      }
+
+      function start() {
+        stop();
+        timer = setInterval(() => show(idx + 1), 4500);
+      }
+
+      function stop() {
+        if (timer) clearInterval(timer);
+        timer = null;
+      }
+
+      prev.addEventListener('click', () => { show(idx - 1); start(); });
+      next.addEventListener('click', () => { show(idx + 1); start(); });
+
+      dots.forEach(d => {
+        d.addEventListener('click', () => {
+          show(Number(d.dataset.slide));
+          start();
+        });
+      });
+
+      // pause on hover (desktop)
+      const stage = document.querySelector('.ev-stage');
+      stage.addEventListener('mouseenter', stop);
+      stage.addEventListener('mouseleave', start);
+
+      start();
+    })();
+
+    // ============================
+    // INITIALIZATION
+    // ============================
+    document.addEventListener('DOMContentLoaded', () => {
+      setupAudienceDesktop();
+      setupNavbarDesktop();
+      setupAudienceMobilePanel();
+      setupNavbarMobilePanel();
+      setupCampusSlider();
+      setupMiniNav();
+
+      $('#overlay').addEventListener('click', () => {
+        $('#audPanel').dataset.open = 'false';
+        $('#navPanel').dataset.open = 'false';
+        $('#overlay').dataset.open = 'false';
+        lockScroll(false);
+
+        $$('[aria-expanded="true"]').forEach((btn) => {
+          btn.setAttribute('aria-expanded', 'false');
+          const sub = btn.nextElementSibling;
+          if (sub) sub.style.maxHeight = '0';
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          $('#audPanel').dataset.open = 'false';
+          $('#navPanel').dataset.open = 'false';
+          $('#overlay').dataset.open = 'false';
+          lockScroll(false);
+
+          $$('.aud-item.has-dropdown, .has-dropdown, .submenu-wrap').forEach((el) => el.classList.remove('open'));
+          $$('[aria-expanded="true"]').forEach((btn) => {
+            btn.setAttribute('aria-expanded', 'false');
+            const sub = btn.nextElementSibling;
+            if (sub) sub.style.maxHeight = '0';
+          });
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        const aud = $('#audPanel');
+        const nav = $('#navPanel');
+        const overlay = $('#overlay');
+
+        if (window.innerWidth > 680) {
+          aud.dataset.open = 'false';
+          $('#audHamburger').setAttribute('aria-expanded', 'false');
+        }
+        if (window.innerWidth > 980) {
+          nav.dataset.open = 'false';
+          $('#navHamburger').setAttribute('aria-expanded', 'false');
+        }
+        if (aud.dataset.open !== 'true' && nav.dataset.open !== 'true') {
+          overlay.dataset.open = 'false';
+          lockScroll(false);
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+
+          e.preventDefault();
+          const targetElement = document.querySelector(href);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 120,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
